@@ -9,7 +9,7 @@ else:
 loop = True
 while loop:
     query = input("Type your search query: ").strip()
-    doc_list = client.documents.search(query)
+    doc_list = client.documents.search(query).results[:25]
     for i, doc in enumerate(doc_list):
         print(f"{i+1}: \"{doc.title}\" - {doc.contributor} - {doc.created_at}")
 
