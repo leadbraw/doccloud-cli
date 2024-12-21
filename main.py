@@ -12,8 +12,6 @@ while loop:
     doc_list = client.documents.search(query).results[:25]
     for i, doc in enumerate(doc_list):
         print(f"{i+1}: \"{doc.title}\" - {doc.contributor} - {doc.created_at}")
-
-        if i == 25: break # Only show first 25 results.
     choice = input("Search again? (Y/N) ")
     if choice == 'N':
         loop = False
