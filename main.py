@@ -1,7 +1,8 @@
 import sys
 from datetime import datetime
-
 from documentcloud import DocumentCloud
+
+
 username_result = input("Please provide your DocumentCloud username, type 'N' to remain a guest: ")
 if username_result == 'N':
     client = DocumentCloud()
@@ -28,7 +29,7 @@ while loop:
             attribute = getattr(doc, field)
             if isinstance(attribute, datetime): # need to handle converting datetime object to string.
                 attribute = attribute.strftime('%b %d %Y')
-            print(f"{field:.<30}{attribute:.>10}")
+            print(f"{field:.<30}{attribute}")
     choice = input("Search again? (Y/N) ")
     if choice == 'N':
         loop = False
