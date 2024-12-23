@@ -12,13 +12,21 @@ else:
 
 loop = True
 while loop:
+    asking_limit = True
+    while asking_limit:
+        try:
+            limit = int(input("Enter the maximum amount of search results displayed (up to 25): "))
+            if 1 <= limit <= 25:
+                asking_limit = False
+        except ValueError:
+            pass
     query = input("Type your search query: ").strip()
-    doc_list = client.documents.search(query).results[:10] # limiting to 10 results
+    doc_list = client.documents.search(query).results[:limit]
     for i, doc in enumerate(doc_list):
         print(f"{i+1}: \"{doc.title}\" - {doc.contributor} - {doc.created_at.strftime('%b %d %Y')}")
     try:
         selection_choice = int(input("Enter the number of the document you want to "
-                                     "inspect (1-10) Anything else to exit: "))
+                                     f"inspect (1-{limit}) Anything else to exit: "))
     except ValueError:
         sys.exit()
     if 1 <= selection_choice <= 10:
