@@ -51,13 +51,12 @@ while loop:
         try:
             print("-------------------------------------------------------------")
             action_choice = int(input("What would you like to do? Exit (0), Search (1), Upload (2): "))
-            if action_choice == 1:
-                execute_search()
-            elif action_choice == 2:
-                execute_upload()
-            elif action_choice == 0:
-                sys.exit()
-            else:
-                pass
+            match action_choice:
+                case 0:
+                    sys.exit()
+                case 1:
+                    execute_search()
+                case 2:
+                    execute_upload()
         except ValueError:
             pass
