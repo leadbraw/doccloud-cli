@@ -49,6 +49,7 @@ while loop:
     asking_action = True
     while asking_action:
         try:
+            print("-------------------------------------------------------------")
             action_choice = int(input("What would you like to do? Exit (0), Search (1), Upload (2): "))
             if action_choice == 1:
                 execute_search()
