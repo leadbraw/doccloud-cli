@@ -1,6 +1,13 @@
 import sys
 from datetime import datetime
 from documentcloud import DocumentCloud
+from documentcloud.exceptions import (
+    APIError,
+    DuplicateObjectError,
+    CredentialsFailedError,
+    DoesNotExistError,
+    MultipleObjectsReturnedError
+)
 
 def execute_search():
     asking_limit = True
@@ -37,12 +44,21 @@ def execute_upload():
     pass
 
 # --initial setup--
-username_result = input("Please provide your DocumentCloud username, type 'G' to remain a guest: ")
-if username_result == 'G':
-    client = DocumentCloud()
-else:
-    password_result = input("Please provide your DocumentCloud password: ").strip()
-    client = DocumentCloud(username_result, password_result)
+setup_loop = True
+while setup_loop:
+    username_result = input("Please provide your DocumentCloud username, type 'G' to remain a guest: ")
+    if username_result == 'G':
+        client = DocumentCloud()
+        setup_loop = False
+    else:
+        password_result = input("Please provide your DocumentCloud password: ").strip()
+        try:
+            client = DocumentCloud(username_result, password_result)
+            setup_loop = False
+        except CredentialsFailedError: # Re-prompt for username and password
+            print("Invalid username and/or password\n--------------------------------")
+
+
 
 loop = True
 while loop:
