@@ -2,16 +2,7 @@ import sys
 from datetime import datetime
 from documentcloud import DocumentCloud
 
-
-username_result = input("Please provide your DocumentCloud username, type 'N' to remain a guest: ")
-if username_result == 'N':
-    client = DocumentCloud()
-else:
-    password_result = input("Please provide your DocumentCloud password: ").strip()
-    client = DocumentCloud(username_result, password_result)
-
-loop = True
-while loop:
+def execute_search():
     asking_limit = True
     while asking_limit:
         try:
@@ -23,10 +14,13 @@ while loop:
     query = input("Type your search query: ").strip()
     doc_list = client.documents.search(query).results[:limit]
     for i, doc in enumerate(doc_list):
-        print(f"{i+1}: \"{doc.title}\" - {doc.contributor} - {doc.created_at.strftime('%b %d %Y')}")
+        print(f"{i + 1}: \"{doc.title}\" - {doc.contributor} - {doc.created_at.strftime('%b %d %Y')}")
+    execute_inspect(doc_list, limit)
+
+def execute_inspect(doc_list, result_limit):
     try:
         selection_choice = int(input("Enter the number of the document you want to "
-                                     f"inspect (1-{limit}) Anything else to exit: "))
+                                     f"inspect (1-{result_limit}) Anything else to exit: "))
     except ValueError:
         sys.exit()
     if 1 <= selection_choice <= 10:
@@ -38,6 +32,31 @@ while loop:
             if isinstance(attribute, datetime): # need to handle converting datetime object to string.
                 attribute = attribute.strftime('%b %d %Y')
             print(f"{field:.<30}{attribute}")
-    choice = input("Search again? (Y/N) ")
-    if choice == 'N':
-        loop = False
+
+def execute_upload():
+    pass
+
+# --initial setup--
+username_result = input("Please provide your DocumentCloud username, type 'G' to remain a guest: ")
+if username_result == 'G':
+    client = DocumentCloud()
+else:
+    password_result = input("Please provide your DocumentCloud password: ").strip()
+    client = DocumentCloud(username_result, password_result)
+
+loop = True
+while loop:
+    asking_action = True
+    while asking_action:
+        try:
+            action_choice = int(input("What would you like to do? Exit (0), Search (1), Upload (2): "))
+            if action_choice == 1:
+                execute_search()
+            elif action_choice == 2:
+                execute_upload()
+            elif action_choice == 0:
+                sys.exit()
+            else:
+                pass
+        except ValueError:
+            pass
