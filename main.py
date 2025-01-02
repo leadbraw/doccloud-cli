@@ -20,9 +20,12 @@ def execute_search():
             pass
     query = input("Type your search query: ").strip()
     doc_list = client.documents.search(query).results[:limit]
-    for i, doc in enumerate(doc_list):
-        print(f"{i + 1}: \"{doc.title}\" - {doc.contributor} - {doc.created_at.strftime('%b %d %Y')}")
-    execute_inspect(doc_list, limit)
+    if not doc_list: # List is empty (no results for query)
+        print("Your query returned no results.")
+    else:
+        for i, doc in enumerate(doc_list):
+            print(f"{i + 1}: \"{doc.title}\" - {doc.contributor} - {doc.created_at.strftime('%b %d %Y')}")
+        execute_inspect(doc_list, limit)
 
 def execute_inspect(doc_list, result_limit):
     try:
