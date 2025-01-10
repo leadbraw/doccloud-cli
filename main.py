@@ -89,5 +89,12 @@ def upload_dir(
         # Display the specific APIError. Usually to do with the user lacking permissions (unverified account).
         print(f"\n[bold red]APIError: {json.loads(e.error)['detail']}")
 
+@app.command()
+def get_document(id: Annotated[int, typer.Argument(help="The numeric ID of the document to be fetched.")]):
+    """
+    Fetches a document from the numeric ID and displays its metadata.
+    """
+    pass
+
 if __name__ == "__main__":
     app()
