@@ -35,7 +35,6 @@ def search(query: str, result_count: Annotated[int, typer.Argument(min=1, max=25
         print(table)
 
 @app.command()
-# Can't handle spaces in file names at the moment.
 def upload(file_path: Annotated[Path, typer.Argument(exists=True, file_okay=True, readable=True, resolve_path=True)],
            username: Annotated[str, typer.Option(prompt=True)],
            password: Annotated[str, typer.Option(prompt=True, hide_input=True)]):
