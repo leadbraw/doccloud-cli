@@ -19,6 +19,9 @@ app = typer.Typer()
 @app.command()
 # Doesn't show 'INTEGER' in help instead shows '[RESULT_COUNT]' as type instead :/
 def search(query: str, result_count: Annotated[int, typer.Argument(min=1, max=25)]=10):
+    """
+    Search DocumentCloud for a query. Optionally specify the number of results shown.
+    """
     client = DocumentCloud()
     doc_list = client.documents.search(query).results[:result_count]
     if not doc_list:  # List is empty (no results for query)
@@ -38,13 +41,19 @@ def search(query: str, result_count: Annotated[int, typer.Argument(min=1, max=25
 def upload(file_path: Annotated[Path, typer.Argument(exists=True, file_okay=True, readable=True, resolve_path=True)],
            username: Annotated[str, typer.Option(prompt=True)],
            password: Annotated[str, typer.Option(prompt=True, hide_input=True)]):
+    """
+    Upload a document on your machine to DocumentCloud.
+    Will prompt for username and password if not entered initially.
+    """
     try:
         client = DocumentCloud(username, password)
         client.documents.upload(file_path)
         print(f"Uploaded {file_path} to your DocumentCloud account.")
     except CredentialsFailedError:
+        # Message from API implies both username *and* password are incorrect, even when not the case.
         print(f"\n[bold red]CredentialsFailedError: Invalid username and/or password!")
     except APIError as e:
+        # Display specific APIError. Usually to do with the user lacking permissions (unverified account).
         print(f"\n[bold red]APIError: {json.loads(e.error)['detail']}")
 
 if __name__ == "__main__":
