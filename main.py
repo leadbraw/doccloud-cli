@@ -1,3 +1,5 @@
+import datetime
+
 import typer
 import json
 from documentcloud import DocumentCloud
@@ -38,9 +40,11 @@ def search(query: str, result_count: Annotated[int, typer.Argument(min=1, max=25
         print(table)
 
 @app.command()
-def upload(file_path: Annotated[Path, typer.Argument(exists=True, file_okay=True, readable=True, resolve_path=True)],
-           username: Annotated[str, typer.Option(prompt=True)],
-           password: Annotated[str, typer.Option(prompt=True, hide_input=True)]):
+def upload(
+        file_path: Annotated[Path, typer.Argument(exists=True, file_okay=True, readable=True, resolve_path=True)],
+        username: Annotated[str, typer.Option(prompt=True)],
+        password: Annotated[str, typer.Option(prompt=True, hide_input=True)]
+):
     """
     Upload a document on your machine to DocumentCloud.
     Will prompt for username and password if not entered initially.
@@ -54,6 +58,31 @@ def upload(file_path: Annotated[Path, typer.Argument(exists=True, file_okay=True
         print(f"\n[bold red]CredentialsFailedError: Invalid username and/or password!")
     except APIError as e:
         # Display specific APIError. Usually to do with the user lacking permissions (unverified account).
+        print(f"\n[bold red]APIError: {json.loads(e.error)['detail']}")
+
+@app.command()
+def upload_dir(
+        dir_path: Annotated[Path, typer.Argument(exists=True, dir_okay=True, readable=True, resolve_path=True)],
+        username: Annotated[str, typer.Option(prompt=True)],
+        password: Annotated[str, typer.Option(prompt=True, hide_input=True)],
+        proj_name: Annotated[str, typer.Argument()]=f"New Project {datetime.datetime.now()}"
+):
+    """
+    Upload a directory of documents on your machine to DocumentCloud as a Project.
+    Will prompt for project name, username, and password if not entered initially.
+    """
+    try:
+        client = DocumentCloud(username, password)
+        project = client.projects.get_or_create_by_title(proj_name)[0]
+        doc_list = client.documents.upload_directory(dir_path)
+        project.document_list = doc_list
+        project.put()
+        print(f"Uploaded {dir_path} contents to your DocumentCloud account, Project name: {proj_name}")
+    except CredentialsFailedError:
+        # Message from API implies both username *and* password are incorrect, even when not the case.
+        print(f"\n[bold red]CredentialsFailedError: Invalid username and/or password!")
+    except APIError as e:
+        # Display the specific APIError. Usually to do with the user lacking permissions (unverified account).
         print(f"\n[bold red]APIError: {json.loads(e.error)['detail']}")
 
 if __name__ == "__main__":
