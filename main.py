@@ -62,6 +62,7 @@ def upload(
         print(f"\n[bold red]APIError: {json.loads(e.error)['detail']}")
 
 @app.command()
+# Doesn't show 'TEXT' in help instead shows '[PROJ_NAME]' as type instead :/
 def upload_dir(
         dir_path: Annotated[Path, typer.Argument(help="The path of the directory to be uploaded.",
                                                  exists=True, dir_okay=True, readable=True, resolve_path=True)],
