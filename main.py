@@ -1,8 +1,6 @@
-import sys
-import json
-from typing import Annotated
-from pathlib import Path
 import typer
+import json
+import sys
 from documentcloud import DocumentCloud
 from documentcloud.exceptions import (
     APIError,
@@ -11,8 +9,11 @@ from documentcloud.exceptions import (
     DoesNotExistError,
     MultipleObjectsReturnedError
 )
+from pathlib import Path
 from rich import print
 from rich.table import Table
+from typing import Annotated
+
 
 app = typer.Typer()
 
