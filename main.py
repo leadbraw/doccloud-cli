@@ -41,9 +41,10 @@ def search(query: str, result_count: Annotated[int, typer.Argument(min=1, max=25
 
 @app.command()
 def upload(
-        file_path: Annotated[Path, typer.Argument(exists=True, file_okay=True, readable=True, resolve_path=True)],
-        username: Annotated[str, typer.Option(prompt=True)],
-        password: Annotated[str, typer.Option(prompt=True, hide_input=True)]
+        file_path: Annotated[Path, typer.Argument(help="The path of the file to be uploaded.",
+                                                  exists=True, file_okay=True, readable=True, resolve_path=True)],
+        username: Annotated[str, typer.Option(help="Your username.", prompt=True)],
+        password: Annotated[str, typer.Option(help="Your password.", prompt=True, hide_input=True)]
 ):
     """
     Upload a document on your machine to DocumentCloud.
@@ -62,10 +63,12 @@ def upload(
 
 @app.command()
 def upload_dir(
-        dir_path: Annotated[Path, typer.Argument(exists=True, dir_okay=True, readable=True, resolve_path=True)],
-        username: Annotated[str, typer.Option(prompt=True)],
-        password: Annotated[str, typer.Option(prompt=True, hide_input=True)],
-        proj_name: Annotated[str, typer.Argument()]=f"New Project {datetime.datetime.now()}"
+        dir_path: Annotated[Path, typer.Argument(help="The path of the directory to be uploaded.",
+                                                 exists=True, dir_okay=True, readable=True, resolve_path=True)],
+        username: Annotated[str, typer.Option(help="Your username.", prompt=True)],
+        password: Annotated[str, typer.Option(help="Your password.", prompt=True, hide_input=True)],
+        proj_name: Annotated[str, typer.Argument(
+            help="The name of the new Project for the documents.")]=f"New Project {datetime.datetime.now()}"
 ):
     """
     Upload a directory of documents on your machine to DocumentCloud as a Project.
