@@ -1,5 +1,5 @@
-from typing import Optional, Annotated
-
+from typing import Annotated
+from pathlib import Path
 import typer
 from documentcloud import DocumentCloud
 from documentcloud.exceptions import (
@@ -31,6 +31,12 @@ def search(query: str, result_count: Annotated[int, typer.Argument(min=1, max=25
                           f"[link={doc.canonical_url}]{doc.title}[/link]",
                           f"{doc.created_at.strftime('%b %d %Y')}")
         print(table)
+
+@app.command()
+def upload(file_path: Annotated[Path, typer.Argument(exists=True, file_okay=True, readable=True, resolve_path=True)],
+           username: Annotated[str, typer.Option(prompt=True)],
+           password: Annotated[str, typer.Option(prompt=True, hide_input=True)]):
+    print(f"upload {file_path}")
 
 if __name__ == "__main__":
     app()
