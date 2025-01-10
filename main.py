@@ -1,3 +1,5 @@
+import sys
+import json
 from typing import Annotated
 from pathlib import Path
 import typer
@@ -36,7 +38,15 @@ def search(query: str, result_count: Annotated[int, typer.Argument(min=1, max=25
 def upload(file_path: Annotated[Path, typer.Argument(exists=True, file_okay=True, readable=True, resolve_path=True)],
            username: Annotated[str, typer.Option(prompt=True)],
            password: Annotated[str, typer.Option(prompt=True, hide_input=True)]):
-    print(f"upload {file_path}")
+    try:
+        client = DocumentCloud(username, password)
+        client.documents.upload(file_path)
+        print(f"Uploaded {file_path} to your DocumentCloud account.")
+    except CredentialsFailedError:
+        print(f"\n[bold red]CredentialsFailedError: Invalid username and/or password!")
+        sys.exit()
+    except APIError as e:
+        print(f"\n[bold red]APIError: {json.loads(e.error)['detail']}")
 
 if __name__ == "__main__":
     app()
