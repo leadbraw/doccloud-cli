@@ -7,11 +7,11 @@ A simple CLI tool to enable interacting with DocumentCloud from the comfort of t
 - Searching for documents (with hyperlinking!)
 - Uploading documents
 
-## TODO (last updated Jan 9 2025) ##
+## TODO (last updated Jan 15 2025) ##
 - Implement document viewing/editing/delete functionality
   - Viewing the full text of the document as parsed by DocumentCloud
   - Browsing within a document via Sections 
-- Improve uploading functionality (batch uploading, uploading from URL)
+- Improve uploading functionality (uploading from URL)
 - Support for viewing/adding/deleting annotations
 - Improve search functionality (ability to fetch more metadata)
 
