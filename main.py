@@ -90,11 +90,27 @@ def upload_dir(
         print(f"\n[bold red]APIError: {json.loads(e.error)['detail']}")
 
 @app.command()
-def get_document(id: Annotated[int, typer.Argument(help="The numeric ID of the document to be fetched.")]):
+def get_document(doc_id: Annotated[int, typer.Argument(help="The numeric ID of the document to be fetched.")]):
     """
     Fetches a document from the numeric ID and displays its metadata.
     """
-    pass
+    try:
+        client = DocumentCloud()
+        doc = client.documents.get(doc_id)
+    except DoesNotExistError as e:
+        print(f"\n[bold red]DoesNotExistError: {json.loads(e.error)['detail']}")
+
+    table = Table(title="[red]Search Results")
+    table.add_column("Contributor", justify="center", style="cyan")
+    table.add_column("Title", justify="center", style="magenta")
+    table.add_column("Creation Date", justify="center", style="green")
+    table.add_column("Page Count", justify="center", style="green")
+    table.add_column("URL", justify="center", style="green")
+    table.add_row(f"{doc.contributor}",
+                  f"{doc.title}",
+                  f"{doc.created_at.strftime('%b %d %Y')}",
+                  f"{doc.pages}",
+                  f"{doc.canonical_url}")
 
 if __name__ == "__main__":
     app()
