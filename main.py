@@ -130,5 +130,9 @@ def view_text(doc_id: Annotated[int, typer.Argument(help="The numeric ID of the 
     print(f"[white] Document Text URL: {doc.full_text_url}")
     print(doc.full_text)
 
+@app.command()
+def save_text(doc_id: Annotated[int, typer.Argument(help="The numeric ID of the document.")]):
+    pass
+
 if __name__ == "__main__":
     app()
