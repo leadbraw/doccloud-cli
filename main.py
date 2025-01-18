@@ -1,7 +1,6 @@
 import datetime
-
-import typer
 import json
+import typer
 from documentcloud import DocumentCloud
 from documentcloud.exceptions import (
     APIError,
@@ -33,10 +32,12 @@ def search(query: str, result_count: Annotated[int, typer.Argument(min=1, max=25
         table.add_column("Contributor", justify="center", style="cyan")
         table.add_column("Title", justify="center", style="magenta")
         table.add_column("Creation Date", justify="center", style="green")
+        table.add_column("ID", justify="center", style="green")
         for doc in doc_list:
             table.add_row(f"{doc.contributor}",
                           f"[link={doc.canonical_url}]{doc.title}[/link]",
-                          f"{doc.created_at.strftime('%b %d %Y')}")
+                          f"{doc.created_at.strftime('%b %d %Y')}",
+                          f"{doc.id}")
         print(table)
 
 @app.command()
@@ -99,8 +100,9 @@ def get_document(doc_id: Annotated[int, typer.Argument(help="The numeric ID of t
         doc = client.documents.get(doc_id)
     except DoesNotExistError as e:
         print(f"\n[bold red]DoesNotExistError: {json.loads(e.error)['detail']}")
+        raise typer.Exit()
 
-    table = Table(title="[red]Search Results")
+    table = Table(title="[red]Document Information")
     table.add_column("Contributor", justify="center", style="cyan")
     table.add_column("Title", justify="center", style="magenta")
     table.add_column("Creation Date", justify="center", style="green")
@@ -111,6 +113,7 @@ def get_document(doc_id: Annotated[int, typer.Argument(help="The numeric ID of t
                   f"{doc.created_at.strftime('%b %d %Y')}",
                   f"{doc.pages}",
                   f"{doc.canonical_url}")
+    print(table)
 
 if __name__ == "__main__":
     app()
