@@ -115,5 +115,20 @@ def get_document(doc_id: Annotated[int, typer.Argument(help="The numeric ID of t
                   f"{doc.canonical_url}")
     print(table)
 
+@app.command()
+def view_text(doc_id: Annotated[int, typer.Argument(help="The numeric ID of the document to be fetched.")]):
+    """
+    View the text of a document as parsed by DocumentCloud. Your mileage may vary.
+    """
+    try:
+        client = DocumentCloud()
+        doc = client.documents.get(doc_id)
+    except DoesNotExistError as e:
+        print(f"\n[bold red]DoesNotExistError: {json.loads(e.error)['detail']}")
+        raise typer.Exit()
+    print(f"[red] {'Document Text':^100}")
+    print(f"[white] Document Text URL: {doc.full_text_url}")
+    print(doc.full_text)
+
 if __name__ == "__main__":
     app()
