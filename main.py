@@ -131,8 +131,26 @@ def view_text(doc_id: Annotated[int, typer.Argument(help="The numeric ID of the 
     print(doc.full_text)
 
 @app.command()
-def save_text(doc_id: Annotated[int, typer.Argument(help="The numeric ID of the document.")]):
-    pass
-
+def save_text(doc_id: Annotated[int, typer.Argument(help="The numeric ID of the document.")],
+              file_name: Annotated[str, typer.Argument(help="The name of the text file.")]
+              =f"DocCloudTool {datetime.datetime.now().strftime('%b-%d-%Y-%H-%M-%S')}.txt"
+              ):
+    """
+    Saves the text of a document to a .txt file.
+    """
+    try:
+        client = DocumentCloud()
+        doc = client.documents.get(doc_id)
+    except DoesNotExistError as e:
+        print(f"\n[bold red]DoesNotExistError: {json.loads(e.error)['detail']}")
+        raise typer.Exit()
+    try:
+        with open(file_name, 'x') as f:
+            try:
+                f.write(doc.full_text)
+            except (IOError, OSError):
+                print(f"\n[bold red]Error writing to file!")
+    except (FileNotFoundError, PermissionError, OSError):
+        print(f"\n[bold red]Error opening file!")
 if __name__ == "__main__":
     app()
