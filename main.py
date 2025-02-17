@@ -95,12 +95,7 @@ def get_document(doc_id: Annotated[int, typer.Argument(help="The numeric ID of t
     """
     Fetches a document from the numeric ID and displays its metadata.
     """
-    try:
-        client = DocumentCloud()
-        doc = client.documents.get(doc_id)
-    except DoesNotExistError as e:
-        print(f"\n[bold red]DoesNotExistError: {json.loads(e.error)['detail']}")
-        raise typer.Exit()
+    doc = fetch_document(doc_id)
 
     table = Table(title="[red]Document Information")
     table.add_column("Contributor", justify="center", style="cyan")
@@ -120,12 +115,7 @@ def view_text(doc_id: Annotated[int, typer.Argument(help="The numeric ID of the 
     """
     View the text of a document as parsed by DocumentCloud. Your mileage may vary.
     """
-    try:
-        client = DocumentCloud()
-        doc = client.documents.get(doc_id)
-    except DoesNotExistError as e:
-        print(f"\n[bold red]DoesNotExistError: {json.loads(e.error)['detail']}")
-        raise typer.Exit()
+    doc = fetch_document(doc_id)
     print(f"[red] {'Document Text':^100}")
     print(f"[white] Document Text URL: {doc.full_text_url}")
     print(doc.full_text)
@@ -138,12 +128,7 @@ def save_text(doc_id: Annotated[int, typer.Argument(help="The numeric ID of the 
     """
     Saves the text of a document to a .txt file.
     """
-    try:
-        client = DocumentCloud()
-        doc = client.documents.get(doc_id)
-    except DoesNotExistError as e:
-        print(f"\n[bold red]DoesNotExistError: {json.loads(e.error)['detail']}")
-        raise typer.Exit()
+    doc = fetch_document(doc_id)
     try:
         with open(file_name, 'x') as f:
             try:
@@ -152,5 +137,19 @@ def save_text(doc_id: Annotated[int, typer.Argument(help="The numeric ID of the 
                 print(f"\n[bold red]Error writing to file!")
     except (FileNotFoundError, PermissionError, OSError):
         print(f"\n[bold red]Error opening file!")
+
+def fetch_document(doc_id):
+    """
+    Helper method that fetches a document by ID and returns it.
+    :param doc_id: The ID of a document to be fetched.
+    :return: The Document object.
+    """
+    try:
+        client = DocumentCloud()
+        doc = client.documents.get(doc_id)
+    except DoesNotExistError as e:
+        print(f"\n[bold red]DoesNotExistError: {json.loads(e.error)['detail']}")
+        raise typer.Exit()
+    return doc
 if __name__ == "__main__":
     app()
