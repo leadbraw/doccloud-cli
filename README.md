@@ -1,6 +1,6 @@
 # DocCloud Tool
 
-A simple CLI tool to enable interacting with DocumentCloud from the comfort of the terminal. Uses the [python-documentcloud](https://github.com/muckrock/python-documentcloud) wrapper of the DocumentCloud API.
+A simple CLI tool to enable interacting with DocumentCloud from the comfort of the terminal. Uses the [python-documentcloud](https://github.com/muckrock/python-documentcloud) wrapper of the DocumentCloud API, as well as the excellent [Typer](https://github.com/fastapi/typer) CLI library.
 
 ## Features ##
 - Logging into DocumentCloud
