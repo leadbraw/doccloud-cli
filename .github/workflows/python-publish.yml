@@ -1,14 +1,17 @@
-name: Build and publish
+name: Build and publish python package
+
 on:
-  push:
-    tags:
-      - "v*.*.*"
+  release:
+    types: [ published ]
+
 jobs:
-  build:
+  publish-service-client-package:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v3
-      - name: Build and publish to pypi
-        uses: JRubics/poetry-publish@v2.1
+      - name: Publish PyPi package
+        uses: code-specialist/pypi-poetry-publish@v1
         with:
-          pypi_token: ${{ secrets.PYPI_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_REGISTRY_PASSWORD: ${{ secrets.PYPI_TOKEN }}
