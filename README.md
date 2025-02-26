@@ -23,7 +23,7 @@ pip install doccloud-cli
 ## Examples
 See all commands
 ```
-C:\Users\name>doccloud-cli --help
+doccloud-cli --help
 ```
 Output:
 ```
@@ -48,7 +48,7 @@ Output:
 ```
 Searching for documents with the term "Los Angeles". Optional argument to limit the amount of results displayed
 ```
-C:\Users\name>doccloud-cli search "Los Angeles" 5
+doccloud-cli search "Los Angeles" 5
 ```
 Output:
 ```
