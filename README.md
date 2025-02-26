@@ -25,7 +25,7 @@ A simple CLI tool to enable interacting with DocumentCloud from the comfort of t
 - Improve search functionality (ability to fetch more metadata)
 
 ## Contributing
-1. Fork it (<https://github.com/leadbraw/doccloud-tool/fork>)
+1. Fork it (<https://github.com/leadbraw/doccloud-cli/fork>)
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
