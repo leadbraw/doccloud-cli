@@ -151,5 +151,6 @@ def fetch_document(doc_id):
         print(f"\n[bold red]DoesNotExistError: {json.loads(e.error)['detail']}")
         raise typer.Exit()
     return doc
+
 if __name__ == "__main__":
     app()
