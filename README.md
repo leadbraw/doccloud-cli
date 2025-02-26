@@ -9,7 +9,7 @@
 ╚═════╝  ╚═════╝  ╚═════╝ ╚═════╝╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝        ╚═════╝╚══════╝╚═╝                                                                                                                                                       
 python cli program for the DocumentCloud platform
 </pre>
-[![PyPI](https://img.shields.io/pypi/v/doccloud-cli.svg)](https://pypi.org/project/doccloud-tool/)
+[![PyPI](https://img.shields.io/pypi/v/doccloud-cli.svg)](https://pypi.org/project/doccloud-cli/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 </div>
 
