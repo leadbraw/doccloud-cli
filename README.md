@@ -1,4 +1,15 @@
-# DocCloud Tool
+<div align="center">
+<pre>                                         
+
+██████╗  ██████╗  ██████╗ ██████╗██╗      ██████╗ ██╗   ██╗██████╗        ██████╗██╗     ██╗
+██╔══██╗██╔═══██╗██╔════╝██╔════╝██║     ██╔═══██╗██║   ██║██╔══██╗      ██╔════╝██║     ██║
+██║  ██║██║   ██║██║     ██║     ██║     ██║   ██║██║   ██║██║  ██║█████╗██║     ██║     ██║
+██║  ██║██║   ██║██║     ██║     ██║     ██║   ██║██║   ██║██║  ██║╚════╝██║     ██║     ██║
+██████╔╝╚██████╔╝╚██████╗╚██████╗███████╗╚██████╔╝╚██████╔╝██████╔╝      ╚██████╗███████╗██║
+╚═════╝  ╚═════╝  ╚═════╝ ╚═════╝╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝        ╚═════╝╚══════╝╚═╝                                                                                                                                                       
+python cli program for the DocumentCloud platform
+</pre>
+</div>
 
 A simple CLI tool to enable interacting with DocumentCloud from the comfort of the terminal. Uses the [python-documentcloud](https://github.com/muckrock/python-documentcloud) wrapper of the DocumentCloud API, as well as the excellent [Typer](https://github.com/fastapi/typer) CLI library.
 
