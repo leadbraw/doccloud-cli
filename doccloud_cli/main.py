@@ -152,5 +152,4 @@ def fetch_document(doc_id):
         raise typer.Exit()
     return doc
 
-if __name__ == "__main__":
-    app()
+app()
