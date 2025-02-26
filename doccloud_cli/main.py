@@ -48,7 +48,7 @@ def upload(
         password: Annotated[str, typer.Option(help="Your password.", prompt=True, hide_input=True)]
 ):
     """
-    Upload a document on your machine to DocumentCloud.
+    Upload a document from your machine to DocumentCloud.
     Will prompt for username and password if not entered initially.
     """
     try:
