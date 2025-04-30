@@ -19,7 +19,7 @@ build-backend = "poetry.core.masonry.api"
 
 [project]
 name = "doccloud-cli"
-version = "1.0.6"
+version = "1.0.7"
 authors = [
   { name="Noah Dangerfield", email="noah.dangerfield@gmail.com" },
 ]
