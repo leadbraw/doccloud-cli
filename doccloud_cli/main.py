@@ -45,15 +45,18 @@ def upload(
         file_path: Annotated[Path, typer.Argument(help="The path of the file to be uploaded.",
                                                   exists=True, file_okay=True, readable=True, resolve_path=True)],
         username: Annotated[str, typer.Option(help="Your username.", prompt=True)],
-        password: Annotated[str, typer.Option(help="Your password.", prompt=True, hide_input=True)]
+        password: Annotated[str, typer.Option(help="Your password.", prompt=True, hide_input=True)],
+        file_ext: Annotated[str, typer.Option(help="The extension of the file to be uploaded. Defaults to 'pdf'.")]='pdf'
 ):
     """
     Upload a document from your machine to DocumentCloud.
     Will prompt for username and password if not entered initially.
     """
+    # Exclude non-alphanumeric characters
+    file_ext = ''.join(c for c in file_ext if c.isalnum())
     try:
         client = DocumentCloud(username, password)
-        client.documents.upload(file_path)
+        client.documents.upload(file_path, original_extension=file_ext)
         print(f"Uploaded {file_path} to your DocumentCloud account.")
     except CredentialsFailedError:
         # Message from API implies both username *and* password are incorrect, even when not the case.
