@@ -95,7 +95,7 @@ def get_document(doc_id: Annotated[int, typer.Argument(help="The numeric ID of t
     """
     Fetches a document from the numeric ID and displays its metadata.
     """
-    doc = fetch_document(doc_id)
+    doc = _fetch_document(doc_id)
 
     table = Table(title="[red]Document Information")
     table.add_column("Contributor", justify="center", style="cyan")
@@ -115,7 +115,7 @@ def view_text(doc_id: Annotated[int, typer.Argument(help="The numeric ID of the 
     """
     View the text of a document as parsed by DocumentCloud. Your mileage may vary.
     """
-    doc = fetch_document(doc_id)
+    doc = _fetch_document(doc_id)
     print(f"[red] {'Document Text':^100}")
     print(f"[white] Document Text URL: {doc.full_text_url}")
     print(doc.full_text)
@@ -128,7 +128,7 @@ def save_text(doc_id: Annotated[int, typer.Argument(help="The numeric ID of the 
     """
     Saves the text of a document to a .txt file.
     """
-    doc = fetch_document(doc_id)
+    doc = _fetch_document(doc_id)
     try:
         with open(file_name, 'x') as f:
             try:
@@ -138,7 +138,7 @@ def save_text(doc_id: Annotated[int, typer.Argument(help="The numeric ID of the 
     except (FileNotFoundError, PermissionError, OSError):
         print(f"\n[bold red]Error opening file!")
 
-def fetch_document(doc_id):
+def _fetch_document(doc_id):
     """
     Helper method that fetches a document by ID and returns it.
     :param doc_id: The ID of a document to be fetched.
